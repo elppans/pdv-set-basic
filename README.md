@@ -21,12 +21,15 @@ cp ip.txt "$HOME/.ip"
 192.168.15.97
 ```
 
-- Faça um teste de comunicação
+- **OPCIONAL**. Faça um teste de comunicação
 ```bash
 ./pdv-set_ping.sh
 ```
 
-- Por fim execute o update
+- Execute o update
+>O teste de comunicação foi incluído no Script de atualização,
+>Antes do trabalho de atualização, será executado o teste de comunicação.
+
 ```bash
 ./pdv-set_update-pdvJava.sh
 ```
