@@ -1,0 +1,707 @@
+<?xml version='1.0' encoding='iso-8859-1' ?>
+
+<configurador>
+    <!-- XML INFORMACAO -->
+    <arquivo>cod50.xmlZ</arquivo>
+    <data>Wed Mar 16 19:39:05 BRT 2011</data>
+    <versao>3.1</versao>
+    <codigo>50</codigo>
+    <novoframe>extendido</novoframe>
+
+    <!-- Informacoes do frame -->
+    <frame>
+        <corFrame>255,255,255</corFrame>
+        <tamanhoX>802</tamanhoX>
+        <tamanhoY>604</tamanhoY>
+        <titulo>Zanthus</titulo>
+    </frame>
+
+    <!-- Configuracao dos objetos -->
+    <objetos>
+        <campo>
+            <id>1</id>
+            <descricao>DESCRITIVO DA MERCADORIA</descricao>
+            <tamanhoX>382</tamanhoX>
+            <tamanhoY>60</tamanhoY>
+            <posicaoX>19</posicaoX>
+            <posicaoY>27</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>22</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>2</id>
+            <descricao>TITULO: QUANTIDADE</descricao>
+            <tamanhoX>179</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>19</posicaoX>
+            <posicaoY>101</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,204,164</corFonte>
+            <tipo>2</tipo>
+            <texto>QUANTIDADE</texto>
+            <fonteNome>Serif</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>3</id>
+            <descricao>QUANTIDADE</descricao>
+            <tamanhoX>176</tamanhoX>
+            <tamanhoY>55</tamanhoY>
+            <posicaoX>20</posicaoX>
+            <posicaoY>124</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>24</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>4</id>
+            <descricao>TITULO: PRECO UNITARIO</descricao>
+            <tamanhoX>190</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>214</posicaoX>
+            <posicaoY>101</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,204,164</corFonte>
+            <tipo>2</tipo>
+            <texto>PREÇO UNITÁRIO</texto>
+            <fonteNome>Serif</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>5</id>
+            <descricao>PRECO UNITARIO</descricao>
+            <tamanhoX>187</tamanhoX>
+            <tamanhoY>55</tamanhoY>
+            <posicaoX>215</posicaoX>
+            <posicaoY>124</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>25</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>6</id>
+            <descricao>TITULO: PRECO TOTAL</descricao>
+            <tamanhoX>190</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>214</posicaoX>
+            <posicaoY>208</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,204,164</corFonte>
+            <tipo>2</tipo>
+            <texto>PREÇO TOTAL</texto>
+            <fonteNome>Serif</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>7</id>
+            <descricao>PRECO TOTAL</descricao>
+            <tamanhoX>186</tamanhoX>
+            <tamanhoY>54</tamanhoY>
+            <posicaoX>216</posicaoX>
+            <posicaoY>232</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>25</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>8</id>
+            <descricao>TITULO: TOTAL CUPOM</descricao>
+            <tamanhoX>190</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>214</posicaoX>
+            <posicaoY>312</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,204,164</corFonte>
+            <tipo>2</tipo>
+            <texto>TOTAL CUPOM</texto>
+            <fonteNome>Serif</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>9</id>
+            <descricao>TOTAL CUPOM</descricao>
+            <tamanhoX>186</tamanhoX>
+            <tamanhoY>54</tamanhoY>
+            <posicaoX>216</posicaoX>
+            <posicaoY>336</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>0,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>25</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>10</id>
+            <descricao>DIGITACAO</descricao>
+            <tamanhoX>786</tamanhoX>
+            <tamanhoY>59</tamanhoY>
+            <posicaoX>4</posicaoX>
+            <posicaoY>419</posicaoY>
+            <corCampo>255,204,164</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>38</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>11</id>
+            <descricao>DISPLAY ROTATIVO</descricao>
+            <tamanhoX>783</tamanhoX>
+            <tamanhoY>30</tamanhoY>
+            <posicaoX>6</posicaoX>
+            <posicaoY>485</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>4</tipo>
+            <texto>Zanthus Automação Comercial, tecnologia de resultados.</texto>
+            <fonteNome>Monospaced</fonteNome>
+            <fonteTam>22</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>12</id>
+            <descricao>NUMERO DO OPERADOR/PDV</descricao>
+            <tamanhoX>172</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>53</posicaoX>
+            <posicaoY>534</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>13</id>
+            <descricao>NUMERO FUNCAO</descricao>
+            <tamanhoX>172</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>234</posicaoX>
+            <posicaoY>534</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>14</id>
+            <descricao>MENSAGEM DO MODULO FISCAL</descricao>
+            <tamanhoX>364</tamanhoX>
+            <tamanhoY>16</tamanhoY>
+            <posicaoX>423</posicaoX>
+            <posicaoY>518</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>15</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>15</id>
+            <descricao>MENSAGEM DA RETAGUARDA</descricao>
+            <tamanhoX>164</tamanhoX>
+            <tamanhoY>16</tamanhoY>
+            <posicaoX>423</posicaoX>
+            <posicaoY>536</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>15</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>16</id>
+            <descricao>RELOGIO/CALENDARIO</descricao>
+            <tamanhoX>181</tamanhoX>
+            <tamanhoY>18</tamanhoY>
+            <posicaoX>607</posicaoX>
+            <posicaoY>534</posicaoY>
+            <corCampo>65,102,131</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>17</id>
+            <descricao>STATUS DA CONEXAO</descricao>
+            <tamanhoX>130</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>335</posicaoX>
+            <posicaoY>555</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>7</tipo>
+            <texto>Status da Conexão</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>18</id>
+            <descricao>NUMERO DO IP</descricao>
+            <tamanhoX>270</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>470</posicaoX>
+            <posicaoY>555</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>25,0,0</corFonte>
+            <tipo>7</tipo>
+            <texto>192.168.0.1:11011 192.168.0.2:11012</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>4</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>19</id>
+            <descricao>GIRA-GIRA</descricao>
+            <tamanhoX>48</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>741</posicaoX>
+            <posicaoY>555</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>7</tipo>
+            <texto>[0000]</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>20</id>
+            <descricao>CUPOM NA TELA</descricao>
+            <tamanhoX>356</tamanhoX>
+            <tamanhoY>364</tamanhoY>
+            <posicaoX>424</posicaoX>
+            <posicaoY>26</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>3</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>21</id>
+            <descricao>IMAGEM PRINCIPAL</descricao>
+            <tamanhoX>183</tamanhoX>
+            <tamanhoY>181</tamanhoY>
+            <posicaoX>306</posicaoX>
+            <posicaoY>207</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>5</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>guiConfigProj/imagens/Zeus_V1_1.gif</imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>22</id>
+            <descricao>LOGO ZANTHUS</descricao>
+            <tamanhoX>40</tamanhoX>
+            <tamanhoY>40</tamanhoY>
+            <posicaoX>5</posicaoX>
+            <posicaoY>511</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>5</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>img/zanthus.gif</imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>23</id>
+            <descricao>IMAGEM DE FUNDO</descricao>
+            <tamanhoX>800</tamanhoX>
+            <tamanhoY>600</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>5</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>guiConfigProj/imagens/Tela_6_3.jpg</imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>24</id>
+            <descricao>CUPOM NA TELA COM SCROLL</descricao>
+            <tamanhoX>356</tamanhoX>
+            <tamanhoY>364</tamanhoY>
+            <posicaoX>424</posicaoX>
+            <posicaoY>26</posicaoY>
+            <corCampo>0,0,0</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>8</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>true</opaco>
+            <alinhamento></alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>25</id>
+            <descricao>NOME OPERADOR</descricao>
+            <tamanhoX>219</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>222</posicaoX>
+            <posicaoY>508</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,64</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>4,153,153,153,1,0</borda>
+        </campo>
+        <campo>
+            <id>26</id>
+            <descricao>VERSAO NUCLEO</descricao>
+            <tamanhoX>168</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>47</posicaoX>
+            <posicaoY>508</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,64</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>0</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>4,153,153,153,1,0</borda>
+        </campo>
+        <campo>
+            <id>27</id>
+            <descricao>MENSAGEM SIMPLES</descricao>
+            <tamanhoX>168</tamanhoX>
+            <tamanhoY>22</tamanhoY>
+            <posicaoX>619</posicaoX>
+            <posicaoY>508</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,64</corFonte>
+            <tipo>1</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>false</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>4,153,153,153,1,0</borda>
+        </campo>
+        <campo>
+            <id>28</id>
+            <descricao>IMAGEM LOGO</descricao>
+            <tamanhoX>265</tamanhoX>
+            <tamanhoY>315</tamanhoY>
+            <posicaoX>4</posicaoX>
+            <posicaoY>81</posicaoY>
+            <corCampo>204,204,204</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>5</tipo>
+            <texto></texto>
+            <fonteNome>Dialog</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>img/zeusNewLogo.jpg</imgPath>
+            <visivel>false</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+        <campo>
+            <id>29</id>
+            <descricao>MENSAGEM ESTATICA</descricao>
+            <tamanhoX>326</tamanhoX>
+            <tamanhoY>17</tamanhoY>
+            <posicaoX>7</posicaoX>
+            <posicaoY>555</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,0</corFonte>
+            <tipo>7</tipo>
+            <texto>[ALT]+[F9] para ajuda e [F5] para Menu Fiscal.</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>12</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath></imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>0</borda>
+        </campo>
+    </objetos>
+
+    <!-- Configuracao dos objetos visor selecao -->
+    <selecao>
+        <campo>
+            <id>0</id>
+            <descricao>VISOR SELECAO</descricao>
+            <tamanhoX>0</tamanhoX>
+            <tamanhoY>0</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>100,130,160</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>0</tipo>
+            <texto>null</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>null</imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>4,255,255,255,1,0</borda>
+        </campo>
+        <campo>
+            <id>1</id>
+            <descricao>VISOR CABECALHO</descricao>
+            <tamanhoX>0</tamanhoX>
+            <tamanhoY>0</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>100,130,160</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>0</tipo>
+            <texto>null</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>null</imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>4,220,220,220,1,0</borda>
+        </campo>
+        <campo>
+            <id>2</id>
+            <descricao>VISOR TITULOLISTA</descricao>
+            <tamanhoX>0</tamanhoX>
+            <tamanhoY>0</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,64</corFonte>
+            <tipo>0</tipo>
+            <texto>null</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>null</imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>4,220,220,220,1,0</borda>
+        </campo>
+        <campo>
+            <id>3</id>
+            <descricao>VISOR LISTA</descricao>
+            <tamanhoX>0</tamanhoX>
+            <tamanhoY>0</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>255,255,255</corCampo>
+            <corFonte>0,0,64</corFonte>
+            <tipo>0</tipo>
+            <texto>null</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>null</imgPath>
+            <visivel>true</visivel>
+            <opaco>true</opaco>
+            <alinhamento>0</alinhamento>
+            <borda>4,220,220,220,1,0</borda>
+        </campo>
+        <campo>
+            <id>4</id>
+            <descricao>VISOR RODAPE</descricao>
+            <tamanhoX>0</tamanhoX>
+            <tamanhoY>0</tamanhoY>
+            <posicaoX>0</posicaoX>
+            <posicaoY>0</posicaoY>
+            <corCampo>100,130,160</corCampo>
+            <corFonte>255,255,255</corFonte>
+            <tipo>0</tipo>
+            <texto>null</texto>
+            <fonteNome>Lucida Sans Typewriter</fonteNome>
+            <fonteTam>16</fonteTam>
+            <fonteEstilo>1</fonteEstilo>
+            <imgPath>null</imgPath>
+            <visivel>true</visivel>
+            <opaco>false</opaco>
+            <alinhamento>2</alinhamento>
+            <borda>4,220,220,220,1,0</borda>
+        </campo>
+    </selecao>
+</configurador>
+
