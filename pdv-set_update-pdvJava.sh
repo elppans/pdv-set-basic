@@ -103,6 +103,9 @@ fi
 
 # Função para executar o PINGFILE
 executar_ping() {
+    echo
+    echo "Executando teste de comunicação..."
+    echo
     # Executa o script especificado em PINGFILE sem argumentos
     bash "$PINGFILE"
 }
@@ -116,6 +119,9 @@ fi
 # Função para executar o SSHKEYSCFILE
 executar_ssh_keyscan() {
     local IP="$1" # Recebe o IP como argumento
+
+    echo
+    echo "Ajustando conexão do endereço IP: $IP"
 
     if [ -z "$IP" ]; then
         echo "Erro: Nenhum IP fornecido."
@@ -157,6 +163,8 @@ pdv_sshuservar() {
 
 # Função para sincronização de diretório
 ssh_sync() {
+    echo
+    echo "Sincronizando diretório remoto..."
     # echo -e "
     sshpass -p "$passwd" \
         rsync ""$rsync_options"" \
@@ -176,12 +184,11 @@ executar_comando_ssh() {
     fi
 
     # Executa comandos via SSH
-    echo "Executando comandos via SSH"
+    echo "Executando comandos via SSH..."
     sshpass -p "$passwd" ssh ""$ssh_options"" "$user"@"$IP" "
         # Shell/CMD
         # Aqui é onde você irá executar os comandos passados para a função
         $comando_ssh
-
         # End Shell/CMD
     "
 }
@@ -196,7 +203,6 @@ executar_ping
 
 # Executar comandos via SSH, usando IP atribuido ao arquivo ip_OK.txt
 for IP in $(cat "$IP_OK_FILE"); do
-    echo "Ajustando conexão do endereço IP: $IP"
 
     # Chamada para a função para o scan SSH do "IP"
     executar_ssh_keyscan "$IP"
@@ -204,14 +210,12 @@ for IP in $(cat "$IP_OK_FILE"); do
     # Verifica a versão do Ubuntu e executa os comandos apropriados
     pdv_sshuservar
 
-    # Faz a configuração de diretórios
-    sshpass -p "$passwd" ssh ""$ssh_options"" "$user"@"$IP" \
-        "
-        # Shell/CMD
-        echo ""$passwd"" | sudo -S chmod -R 777 "$DIRPDVJAVA"
-        echo ""$passwd"" | sudo -S mkdir -m 777 -p "$WEBFILES"
-        # End Shell/CMD
-        "
+    # Cria e modifica permissões de diretórios específicos
+    # Chamando a função para executar os comandos via SSH
+    executar_comando_ssh "
+    echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
+    echo \"$passwd\" | sudo -S mkdir -m 777 -p \"$WEBFILES\"
+"
 
     # Faz a sincronização local para remoto via Função RSync e SSH
     ssh_sync
@@ -226,64 +230,66 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
     echo \"$passwd\" | sudo -S ldconfig
     echo 'Atualização finalizada!'
-    echo ' '
+    echo
 "
 
     # Via SSH, faz configuração do timezone do sistema, usando a configuração da variável "localstate"
 
     # Timezone Modelo 1. Fazendo uso de multiplos comandos sudo
-    # executar_comando_ssh "
-    #         echo -e '\nAnalisando versão do PDV...'
-    #         cat /etc/canoalinux-release
-    #         echo 'Configurando Timezone...'
-    #         echo \"$passwd\" | sudo -S sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS &>>/dev/null
-    #         echo \"$passwd\" | sudo -S sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
-    #         echo \"$passwd\" | sudo -S ln -sf /usr/share/zoneinfo/"$localstate" /etc/localtime
-    #         echo \"$passwd\" | echo -e \"$localstate\" | sudo -S tee /etc/timezone >> /dev/null
-    #         echo \"$passwd\" | sudo -S dpkg-reconfigure -f noninteractive tzdata
-    #         echo \"$passwd\" | sudo -S hwclock -w
-    #         echo \"$passwd\" | sudo -S timedatectl set-local-rtc 0
-    #         echo \"$passwd\" | sudo -S timedatectl set-ntp 1
-    #         echo \"$passwd\" | sudo -S timedatectl set-timezone  \"$localstate\"
-    #         echo \"$passwd\" | sudo -S ntpdate a.ntp.br b.ntp.br c.ntp.br
-    #         echo \"$passwd\" | sudo -S hwclock -w
-    #         timedatectl
-    #         echo 'Hora atual do PDV:'
-    #         date
-    #         echo 'Configuração do Timezone finalizada!'
-    #         echo ' '
+    # Chamando a função para executar os comandos via SSH
+    #     executar_comando_ssh "
+    #             echo -e '\nAnalisando versão do PDV...'
+    #             cat /etc/canoalinux-release
+    #             echo 'Configurando Timezone...'
+    #             echo \"$passwd\" | sudo -S sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS &>>/dev/null
+    #             echo \"$passwd\" | sudo -S sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
+    #             echo \"$passwd\" | sudo -S ln -sf /usr/share/zoneinfo/"$localstate" /etc/localtime
+    #             echo \"$passwd\" | echo -e \"$localstate\" | sudo -S tee /etc/timezone >> /dev/null
+    #             echo \"$passwd\" | sudo -S dpkg-reconfigure -f noninteractive tzdata
+    #             echo \"$passwd\" | sudo -S hwclock -w
+    #             echo \"$passwd\" | sudo -S timedatectl set-local-rtc 0
+    #             echo \"$passwd\" | sudo -S timedatectl set-ntp 1
+    #             echo \"$passwd\" | sudo -S timedatectl set-timezone  \"$localstate\"
+    #             echo \"$passwd\" | sudo -S ntpdate a.ntp.br b.ntp.br c.ntp.br
+    #             echo \"$passwd\" | sudo -S hwclock -w
+    #             timedatectl
+    #             echo 'Hora atual do PDV:'
+    #             date
+    #             echo 'Configuração do Timezone finalizada!'
+    #             echo ' '
     # "
 
     # Timezone Modelo 2. Fazendo uso de de <<EOF
     # Substitui os múltiplos comandos {echo "$passwd" | sudo -S} por um bloco único usando {sudo -S bash <<EOF}.
     # Isso permite que execute múltiplos comandos com sudo de uma vez, o que torna o código mais limpo e eficiente.
     # Além disso, isso evita a repetição do comando {echo "$passwd" | sudo -S} várias vezes.
-    # executar_comando_ssh "
-    #     echo -e '\nAnalisando versão do PDV...'
-    #     cat /etc/canoalinux-release
-    #     echo 'Configurando Timezone...'
+    # Chamando a função para executar os comandos via SSH
+    #     executar_comando_ssh "
+    #         echo -e '\nAnalisando versão do PDV...'
+    #         cat /etc/canoalinux-release
+    #         echo 'Configurando Timezone...'
 
-    #     # Usando sudo uma vez para todos os comandos
-    #     echo \"$passwd\" | sudo -S bash <<EOF
-    #     sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS
-    #     sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
-    #     ln -sf /usr/share/zoneinfo/$localstate /etc/localtime
-    #     echo -e \"$localstate\" | tee /etc/timezone > /dev/null
-    #     dpkg-reconfigure -f noninteractive tzdata
-    #     hwclock -w
-    #     timedatectl set-local-rtc 0
-    #     timedatectl set-ntp 1
-    #     timedatectl set-timezone \"$localstate\"
-    #     ntpdate a.ntp.br b.ntp.br c.ntp.br
-    #     hwclock -w
+    #         # Usando sudo uma vez para todos os comandos
+    #         echo \"$passwd\" | sudo -S bash <<EOF
+    #         sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS
+    #         sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
+    #         ln -sf /usr/share/zoneinfo/$localstate /etc/localtime
+    #         echo -e \"$localstate\" | tee /etc/timezone > /dev/null
+    #         dpkg-reconfigure -f noninteractive tzdata
+    #         hwclock -w
+    #         timedatectl set-local-rtc 0
+    #         timedatectl set-ntp 1
+    #         timedatectl set-timezone \"$localstate\"
+    #         ntpdate a.ntp.br b.ntp.br c.ntp.br
+    #         hwclock -w
     # EOF
 
-    #     # Exibindo as configurações finais
-    #     timedatectl
-    #     echo 'Hora atual do PDV:'
-    #     date
-    #     echo 'Configuração do Timezone finalizada!'
-    #     echo ' '
+    #         # Exibindo as configurações finais
+    #         timedatectl
+    #         echo 'Hora atual do PDV:'
+    #         date
+    #         echo 'Configuração do Timezone finalizada!'
+    #         echo ' '
     # "
 
 done
