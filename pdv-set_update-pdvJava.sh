@@ -213,8 +213,9 @@ for IP in $(cat "$IP_OK_FILE"); do
     # Cria e modifica permissões de diretórios específicos
     # Chamando a função para executar os comandos via SSH
     executar_comando_ssh "
-    echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
-    echo \"$passwd\" | sudo -S mkdir -m 777 -p \"$WEBFILES\"
+    echo 'Criando diretório temporário...'
+    echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
+    echo \"$passwd\" | sudo -S mkdir -m 777 -p \"$WEBFILES\" &>>/dev/null
 "
 
     # Faz a sincronização local para remoto via Função RSync e SSH
