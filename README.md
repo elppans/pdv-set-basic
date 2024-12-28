@@ -27,7 +27,7 @@ cp ip.txt "$HOME/.ip"
 ```
 
 - Execute o update
->O teste de comunicação foi incluído no Script de atualização,
+>O teste de comunicação foi incluído no Script de atualização,  
 >Antes do trabalho de atualização, será executado o teste de comunicação.
 
 ```bash
