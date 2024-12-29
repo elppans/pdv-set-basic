@@ -1,0 +1,4 @@
+# Ignorar tudo
+*
+# Não ignorar arquivos específicos
+!/*.sh
