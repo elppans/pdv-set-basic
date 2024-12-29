@@ -83,10 +83,14 @@ export ssh_version
 # não exibir nenhuma mensagem no terminal relacionada à verificação da chave do host.
 if [[ $(echo "$ssh_version >= 7.6" | bc -l) -eq 1 ]]; then
     # As opções "-o UserKnownHostsFile=/dev/null" e  "-o LogLevel=QUIET" são suportados a partir do OpenSSH 7.6
-    ssh_options="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
+    # Algorítmos "ssh-rsa e ssh-dss". versões mais recentes do OpenSSH desativaram, por padrão, os algoritmos de host keys como ssh-rsa e ssh-dss por questões de segurança.
+    # A solução para que o Script funcione TAMBÈM para o Ubuntu 12.04, foi adicionar a opção HostKeyAlgorithms ao comando para permitir o uso de ssh-rsa.
+    # ssh_options="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
+    ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
 else
     # Configuração para Sistemas com SSH antigo.
-    ssh_options="-o StrictHostKeyChecking=no"
+    # ssh_options="-o StrictHostKeyChecking=no"
+    ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no"
 fi
 
 # Exporta a configuração SSH
@@ -187,7 +191,7 @@ executar_comando_ssh() {
     echo "Executando comandos via SSH..."
     sshpass -p "$passwd" ssh ""$ssh_options"" "$user"@"$IP" "
         # Shell/CMD
-        # Aqui é onde você irá executar os comandos passados para a função
+        # Executar os comandos passados para a função
         $comando_ssh
         # End Shell/CMD
     "
@@ -222,7 +226,13 @@ for IP in $(cat "$IP_OK_FILE"); do
     ssh_sync
 
     # Faz a sincronização de diretórios locais via acesso SSH, usando RSync
+    # rsync versão menor que 3.1.0 não tem suporte à opção "--info=progress2";
+    # Solução para cópia local em TODAS AS VERSÕES do rsync, e portanto sistema como o Ubuntu 12 é trocar para "--stats".
+    rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--stats/')"
+    export rsync_options_local
+
     # Chamando a função para executar os comandos via SSH
+    # A execução da função suporta apenas comandos diretos
     executar_comando_ssh "
     # echo 'Analisando versão do PDV...'
     # cat /etc/canoalinux-release
@@ -230,6 +240,7 @@ for IP in $(cat "$IP_OK_FILE"); do
     cd \"$WEBFILES\"
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
     echo \"$passwd\" | sudo -S ldconfig
+    echo
     echo 'Atualização finalizada!'
     echo
 "
