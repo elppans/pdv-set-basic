@@ -1,6 +1,0 @@
-Dentro da pasta pdvJava encontra-se a pasta pdvGUI e nesta pasta encontra-se o executável (java) da apresentação do PDV, jpdvgui6.jar e o arquivo de configuração pdvJava.cfg, na versão 7.7.4 do jpdvgui6.jar foram implementadas funcionalidades com relação as configurações do display para quando tivermos mais de um monitor conectado a controladora de vídeo. Estas funcionalidades serão ativadas através de parâmetros que terão que ser incluídos no arquivo pdvJava.cfg, veja modelo abaixo:
-
-#Configuracoes do display: fullscreen
-habilitar_operacao_display=true
-#Monitor que deseja que a aplicacao abra se existirem 2 monitores: 0 ou 1
-monitor_padrao=0
