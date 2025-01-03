@@ -39,11 +39,13 @@ verifica_comando rsync
 # rsync. Substituido -a (archive) por -rl. -r (Recursivo)/-l (Preserva links simbólicos.)
 # rsync. A substituição elimina redundâncias, mantendo o mesmo comportamento esperado.
 # rsync local. Quando for um comando local, removendo a opção '-e'. Uso para função "executar_comando_ssh"
+# rsync "--update". Copia apenas arquivos que são mais novos na origem do que no destino, ou que não existem no destino.
 IP_DIR="$HOME/.ip"
 IP_FILE="$IP_DIR/ip.txt"
 IP_OK_FILE="$IP_DIR/ip_ok.txt"
 IP_OFF_FILE="$IP_DIR/ip_off.txt"
 # rsync_options="-rlhvz --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
+# rsync_options="-rlhvz --update --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 rsync_options="-rlhz --info=progress2 --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 rsync_options_local="$(echo $rsync_options | sed 's/ -e//')"
 localstate="America/Sao_Paulo"
