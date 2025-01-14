@@ -240,6 +240,10 @@ for IP in $(cat "$IP_OK_FILE"); do
     # cat /etc/canoalinux-release
     echo 'Atualizando arquivos...'
     cd \"$WEBFILES\"
+    echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum
+    echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum_servidor
+    echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
+    echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
     echo \"$passwd\" | sudo -S ldconfig
     echo
