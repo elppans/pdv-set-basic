@@ -257,7 +257,7 @@ for IP in $(cat "$IP_OK_FILE"); do
     # Extrair e executar pacote do repositório "pdv-update"
     tar -zxf pdv-update.tar.gz
     cd pdv-update
-    echo \"$passwd\" | sudo -S ./pdv-update
+    echo \"$passwd\" | sudo -S ./pdv-update --pdv
 
     # Finalizando as configurações
     echo \"$passwd\" | sudo -S ldconfig
