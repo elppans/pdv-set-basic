@@ -236,15 +236,30 @@ for IP in $(cat "$IP_OK_FILE"); do
     # Chamando a função para executar os comandos via SSH
     # A execução da função suporta apenas comandos diretos
     executar_comando_ssh "
-    # echo 'Analisando versão do PDV...'
-    # cat /etc/canoalinux-release
+    # Verificando versão do sistema
+    echo 'Analisando versão do PDV...'
+    cat /etc/canoalinux-release
+
+    # Acessando diretório temporário
     echo 'Atualizando arquivos...'
     cd \"$WEBFILES\"
-    echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum
-    echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum_servidor
-    echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
-    echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
-    echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
+
+    # Executando configurações
+    # Limpando path_comum assíncrono (Apenas Descanso)
+    # echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum
+    # echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum_servidor
+    # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
+    # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
+    
+    # Sincronizando pdvJava usando o diretório temporário
+    # echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
+    
+    # Extrair e executar pacote do repositório "pdv-update"
+    tar -zxf pdv-update.tar.gz
+    cd pdv-update
+    echo \"$passwd\" | sudo -S ./pdv-update
+
+    # Finalizando as configurações
     echo \"$passwd\" | sudo -S ldconfig
     echo
     echo 'Atualização finalizada!'
