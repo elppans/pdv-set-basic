@@ -83,17 +83,20 @@ export ssh_version
 # Não verificar a chave do host,
 # automatizar a gravação da chave do host em cache na primeira conexão e
 # não exibir nenhuma mensagem no terminal relacionada à verificação da chave do host.
+
+# As opções "-o UserKnownHostsFile=/dev/null" e  "-o LogLevel=QUIET" são suportadosem alguma versão anterior ao OpenSSH 7.6
+# As opções "-o HostKeyAlgorithms=+ssh-rsa" e "-o PubkeyAcceptedAlgorithms=+ssh-rsa" são suportados a partir do OpenSSH 8.8
+# A partir do OpenSSH 8.8, o algoritmo ssh-rsa foi desativado por padrão por questões de segurança.
+# Já o algoritmo ssh-dss foi desativado no OpenSSH 7.0.
+
 if [[ $(echo "$ssh_version >= 7.6" | bc -l) -eq 1 ]]; then
-    # As opções "-o UserKnownHostsFile=/dev/null" e  "-o LogLevel=QUIET" são suportados a partir do OpenSSH 7.6
-    # Algorítmos "ssh-rsa e ssh-dss". versões mais recentes do OpenSSH desativaram, por padrão, os algoritmos de host keys como ssh-rsa e ssh-dss por questões de segurança.
-    # A solução para que o Script funcione TAMBÈM para o Ubuntu 12.04, foi adicionar a opção HostKeyAlgorithms ao comando para permitir o uso de ssh-rsa.
-    # ssh_options="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
     ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
-else
-    # Configuração para Sistemas com SSH antigo.
-    # ssh_options="-o StrictHostKeyChecking=no"
+elif [[ $(echo "$ssh_version > 7.4 && $ssh_version < 7.6" | bc -l) -eq 1 ]]; then
     ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no"
+else
+    ssh_options="-o StrictHostKeyChecking=no"
 fi
+
 
 # Exporta a configuração SSH
 export ssh_options
