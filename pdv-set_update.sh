@@ -269,9 +269,9 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo
     
     # Reinicializar o sistema após 5 Segundos
-    # echo 'O sistema será reinicializado em 5 Segundos...'
-    # sleep 5
-    # echo \"$passwd\" | sudo -S reboot
+    echo 'O sistema será reinicializado em 5 Segundos...'
+    sleep 5
+    echo \"$passwd\" | sudo -S reboot
 "
 
 done
