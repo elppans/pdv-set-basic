@@ -267,6 +267,8 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo
     echo 'Atualização finalizada!'
     echo
+    # Reinicializar o sistema após 6 Segundos
+    # for i in `seq 6 -1 1` ; do echo -ne "O sistema será reinicializado em $i Segundos.\r" ; sleep 1 ; done
 "
 
     # Via SSH, faz configuração do timezone do sistema, usando a configuração da variável "localstate"
