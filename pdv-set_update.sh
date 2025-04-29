@@ -267,8 +267,10 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo
     echo 'Atualização finalizada!'
     echo
-    # Reinicializar o sistema após 6 Segundos
-    # read -p 'O sistema será reinicializado em 5 Segundos...' -t 5
+    
+    # Reinicializar o sistema após 5 Segundos
+    # echo 'O sistema será reinicializado em 5 Segundos...'
+    # sleep 5
     # echo \"$passwd\" | sudo -S reboot
 "
 
