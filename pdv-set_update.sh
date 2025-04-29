@@ -268,8 +268,8 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo 'Atualização finalizada!'
     echo
     # Reinicializar o sistema após 6 Segundos
-    read -p 'O sistema será reinicializado em 5 Segundos...' -t 5
-    echo \"$passwd\" | sudo -S reboot
+    # read -p 'O sistema será reinicializado em 5 Segundos...' -t 5
+    # echo \"$passwd\" | sudo -S reboot
 "
 
     # Via SSH, faz configuração do timezone do sistema, usando a configuração da variável "localstate"
