@@ -1,0 +1,59 @@
+
+    # Via SSH, faz configuração do timezone do sistema, usando a configuração da variável "localstate"
+
+    # Timezone Modelo 1. Fazendo uso de multiplos comandos sudo
+    # Chamando a função para executar os comandos via SSH
+    #     executar_comando_ssh "
+    #             echo -e '\nAnalisando versão do PDV...'
+    #             cat /etc/canoalinux-release
+    #             echo 'Configurando Timezone...'
+    #             echo \"$passwd\" | sudo -S sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS &>>/dev/null
+    #             echo \"$passwd\" | sudo -S sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
+    #             echo \"$passwd\" | sudo -S ln -sf /usr/share/zoneinfo/"$localstate" /etc/localtime
+    #             echo \"$passwd\" | echo -e \"$localstate\" | sudo -S tee /etc/timezone >> /dev/null
+    #             echo \"$passwd\" | sudo -S dpkg-reconfigure -f noninteractive tzdata
+    #             echo \"$passwd\" | sudo -S hwclock -w
+    #             echo \"$passwd\" | sudo -S timedatectl set-local-rtc 0
+    #             echo \"$passwd\" | sudo -S timedatectl set-ntp 1
+    #             echo \"$passwd\" | sudo -S timedatectl set-timezone  \"$localstate\"
+    #             echo \"$passwd\" | sudo -S ntpdate a.ntp.br b.ntp.br c.ntp.br
+    #             echo \"$passwd\" | sudo -S hwclock -w
+    #             timedatectl
+    #             echo 'Hora atual do PDV:'
+    #             date
+    #             echo 'Configuração do Timezone finalizada!'
+    #             echo ' '
+    # "
+
+    # Timezone Modelo 2. Fazendo uso de de <<EOF
+    # Substitui os múltiplos comandos {echo "$passwd" | sudo -S} por um bloco único usando {sudo -S bash <<EOF}.
+    # Isso permite que execute múltiplos comandos com sudo de uma vez, o que torna o código mais limpo e eficiente.
+    # Além disso, isso evita a repetição do comando {echo "$passwd" | sudo -S} várias vezes.
+    # Chamando a função para executar os comandos via SSH
+    #     executar_comando_ssh "
+    #         echo -e '\nAnalisando versão do PDV...'
+    #         cat /etc/canoalinux-release
+    #         echo 'Configurando Timezone...'
+
+    #         # Usando sudo uma vez para todos os comandos
+    #         echo \"$passwd\" | sudo -S bash <<EOF
+    #         sed -i 's/UTC=no/UTC=yes/' /etc/default/rcS
+    #         sed -i 's/NTPDATE_USE_NTP_CONF=no/NTPDATE_USE_NTP_CONF=yes/' /etc/default/ntpdate
+    #         ln -sf /usr/share/zoneinfo/$localstate /etc/localtime
+    #         echo -e \"$localstate\" | tee /etc/timezone > /dev/null
+    #         dpkg-reconfigure -f noninteractive tzdata
+    #         hwclock -w
+    #         timedatectl set-local-rtc 0
+    #         timedatectl set-ntp 1
+    #         timedatectl set-timezone \"$localstate\"
+    #         ntpdate a.ntp.br b.ntp.br c.ntp.br
+    #         hwclock -w
+    # EOF
+
+    #         # Exibindo as configurações finais
+    #         timedatectl
+    #         echo 'Hora atual do PDV:'
+    #         date
+    #         echo 'Configuração do Timezone finalizada!'
+    #         echo ' '
+    # "
