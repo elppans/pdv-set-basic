@@ -4,12 +4,12 @@
 
 # Função para verificar se um comando existe
 verifica_comando() {
-    comando=$1
+	comando=$1
 
-    if ! command -v "$comando" &>/dev/null; then
-        echo "Erro: O comando '$comando' não está instalado. Por favor, instale-o antes de continuar."
-        exit 1
-    fi
+	if ! command -v "$comando" &>/dev/null; then
+		echo "Erro: O comando '$comando' não está instalado. Por favor, instale-o antes de continuar."
+		exit 1
+	fi
 }
 
 # Verifica se os comandos necessários estão instalados
@@ -90,13 +90,12 @@ export ssh_version
 # Já o algoritmo ssh-dss foi desativado no OpenSSH 7.0.
 
 if [[ $(echo "$ssh_version >= 7.6" | bc -l) -eq 1 ]]; then
-    ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
+	ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=QUIET"
 elif [[ $(echo "$ssh_version > 7.4 && $ssh_version < 7.6" | bc -l) -eq 1 ]]; then
-    ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no"
+	ssh_options="-o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=no"
 else
-    ssh_options="-o StrictHostKeyChecking=no"
+	ssh_options="-o StrictHostKeyChecking=no"
 fi
-
 
 # Exporta a configuração SSH
 export ssh_options
@@ -106,95 +105,95 @@ export ssh_options
 
 # Verifica se o arquivo especificado em PINGFILE existe
 if [ ! -f "$PINGFILE" ]; then
-    echo "Erro: O arquivo '$PINGFILE' não existe. Por favor, crie-o ou especifique o caminho correto."
-    exit 1
+	echo "Erro: O arquivo '$PINGFILE' não existe. Por favor, crie-o ou especifique o caminho correto."
+	exit 1
 fi
 
 # Função para executar o PINGFILE
 executar_ping() {
-    echo
-    echo "Executando teste de comunicação..."
-    echo
-    # Executa o script especificado em PINGFILE sem argumentos
-    bash "$PINGFILE"
+	echo
+	echo "Executando teste de comunicação..."
+	echo
+	# Executa o script especificado em PINGFILE sem argumentos
+	bash "$PINGFILE"
 }
 
 # Verifica se o arquivo especificado em SSHKEYSCFILE existe
 if [ ! -f "$SSHKEYSCFILE" ]; then
-    echo "Erro: O arquivo '$SSHKEYSCFILE' não existe. Por favor, crie-o ou especifique o caminho correto."
-    exit 1
+	echo "Erro: O arquivo '$SSHKEYSCFILE' não existe. Por favor, crie-o ou especifique o caminho correto."
+	exit 1
 fi
 
 # Função para executar o SSHKEYSCFILE
 executar_ssh_keyscan() {
-    local IP="$1" # Recebe o IP como argumento
+	local IP="$1" # Recebe o IP como argumento
 
-    echo
-    echo "Ajustando conexão do endereço IP: $IP"
+	echo
+	echo "Ajustando conexão do endereço IP: $IP"
 
-    if [ -z "$IP" ]; then
-        echo "Erro: Nenhum IP fornecido."
-        exit 1
-    fi
+	if [ -z "$IP" ]; then
+		echo "Erro: Nenhum IP fornecido."
+		exit 1
+	fi
 
-    # Executa o script especificado em SSHKEYSCFILE passando o IP como argumento
-    bash "$SSHKEYSCFILE" "$IP"
+	# Executa o script especificado em SSHKEYSCFILE passando o IP como argumento
+	bash "$SSHKEYSCFILE" "$IP"
 }
 
 # Verifica se o diretório especificado em PWDFILES existe
 if [ ! -d "$PWDFILES" ]; then
-    echo "Erro: O diretório '$PWDFILES' não existe. Por favor, crie-o ou especifique o caminho correto."
-    exit 1
+	echo "Erro: O diretório '$PWDFILES' não existe. Por favor, crie-o ou especifique o caminho correto."
+	exit 1
 fi
 
 pdv_sshuservar() {
-    echo "Verificando usuário ssh..."
-    if sshpass -p ""$passwd"" ssh ""$ssh_options"" user@"$IP" "lsb_release -r | grep -q '16.04'" &>>/dev/null; then
-        user="user"
-        export user
-        echo "Usuário $user em PDV 16.04"
-    elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '22.04'"; then
-        user="zanthus"
-        export user
-        echo "Usuário $user em PDV 22.04"
-    elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '12.04'"; then
-        user="zanthus"
-        export user
-        echo "Usuário $user em PDV 12.04"
-    elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r"; then
-        user="root"
-        export user
-        echo "Usuário $user em PDV..."
-    else
-        echo "Não foi possível verificar o sistema do IP \"$IP\""
-    fi
+	echo "Verificando usuário ssh..."
+	if sshpass -p ""$passwd"" ssh ""$ssh_options"" user@"$IP" "lsb_release -r | grep -q '16.04'" &>>/dev/null; then
+		user="user"
+		export user
+		echo "Usuário $user em PDV 16.04"
+	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '22.04'"; then
+		user="zanthus"
+		export user
+		echo "Usuário $user em PDV 22.04"
+	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '12.04'"; then
+		user="zanthus"
+		export user
+		echo "Usuário $user em PDV 12.04"
+	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r"; then
+		user="root"
+		export user
+		echo "Usuário $user em PDV..."
+	else
+		echo "Não foi possível verificar o sistema do IP \"$IP\""
+	fi
 }
 
 # Função para sincronização de diretório
 ssh_sync() {
-    echo
-    echo "Sincronizando diretório remoto..."
-    # echo -e "
-    sshpass -p "$passwd" \
-        rsync ""$rsync_options"" \
-        "ssh ""$ssh_options""" \
-        ""$PWDFILES""/ $user@""$IP"":""$WEBFILES""/
-    # "
+	echo
+	echo "Sincronizando diretório remoto..."
+	# echo -e "
+	sshpass -p "$passwd" \
+		rsync ""$rsync_options"" \
+		"ssh ""$ssh_options""" \
+		""$PWDFILES""/ $user@""$IP"":""$WEBFILES""/
+	# "
 }
 
 # Função para executar comando via SSH
 executar_comando_ssh() {
-    local comando_ssh="$1"
+	local comando_ssh="$1"
 
-    # Certifique-se de que as variáveis necessárias estão definidas
-    if [[ -z "$passwd" || -z "$ssh_options" || -z "$user" || -z "$IP" || -z "$WEBFILES" || -z "$rsync_options" || -z "$DIRPDVJAVA" ]]; then
-        echo "Erro: Uma ou mais variáveis necessárias não estão definidas."
-        return 1
-    fi
+	# Certifique-se de que as variáveis necessárias estão definidas
+	if [[ -z "$passwd" || -z "$ssh_options" || -z "$user" || -z "$IP" || -z "$WEBFILES" || -z "$rsync_options" || -z "$DIRPDVJAVA" ]]; then
+		echo "Erro: Uma ou mais variáveis necessárias não estão definidas."
+		return 1
+	fi
 
-    # Executa comandos via SSH
-    echo "Executando comandos via SSH..."
-    sshpass -p "$passwd" ssh ""$ssh_options"" "$user"@"$IP" "
+	# Executa comandos via SSH
+	echo "Executando comandos via SSH..."
+	sshpass -p "$passwd" ssh ""$ssh_options"" "$user"@"$IP" "
         # Shell/CMD
         # Executar os comandos passados para a função
         $comando_ssh
@@ -213,32 +212,32 @@ executar_ping
 # Executar comandos via SSH, usando IP atribuido ao arquivo ip_OK.txt
 for IP in $(cat "$IP_OK_FILE"); do
 
-    # Chamada para a função para o scan SSH do "IP"
-    executar_ssh_keyscan "$IP"
+	# Chamada para a função para o scan SSH do "IP"
+	executar_ssh_keyscan "$IP"
 
-    # Verifica a versão do Ubuntu e executa os comandos apropriados
-    pdv_sshuservar
+	# Verifica a versão do Ubuntu e executa os comandos apropriados
+	pdv_sshuservar
 
-    # Cria e modifica permissões de diretórios específicos
-    # Chamando a função para executar os comandos via SSH
-    executar_comando_ssh "
+	# Cria e modifica permissões de diretórios específicos
+	# Chamando a função para executar os comandos via SSH
+	executar_comando_ssh "
     echo 'Criando diretório temporário...'
     echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
     echo \"$passwd\" | sudo -S mkdir -m 777 -p \"$WEBFILES\" &>>/dev/null
 "
 
-    # Faz a sincronização local para remoto via Função RSync e SSH
-    ssh_sync
+	# Faz a sincronização local para remoto via Função RSync e SSH
+	ssh_sync
 
-    # Faz a sincronização de diretórios locais via acesso SSH, usando RSync
-    # rsync versão menor que 3.1.0 não tem suporte à opção "--info=progress2";
-    # Solução para cópia local em TODAS AS VERSÕES do rsync, e portanto sistema como o Ubuntu 12 é trocar para "--stats".
-    rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--stats/')"
-    export rsync_options_local
+	# Faz a sincronização de diretórios locais via acesso SSH, usando RSync
+	# rsync versão menor que 3.1.0 não tem suporte à opção "--info=progress2";
+	# Solução para cópia local em TODAS AS VERSÕES do rsync, e portanto sistema como o Ubuntu 12 é trocar para "--stats".
+	rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--stats/')"
+	export rsync_options_local
 
-    # Chamando a função para executar os comandos via SSH
-    # A execução da função suporta apenas comandos diretos
-    executar_comando_ssh "
+	# Chamando a função para executar os comandos via SSH
+	# A execução da função suporta apenas comandos diretos
+	executar_comando_ssh "
     # Verificando versão do sistema
     echo 'Analisando versão do PDV...'
     cat /etc/canoalinux-release
@@ -254,20 +253,27 @@ for IP in $(cat "$IP_OK_FILE"); do
     # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
     # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
     
+	# Setando permissões em diretórios padrões do PDV
+	echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
+
+	# Removendo pacote pdv-update
+	echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
+
     # Sincronizando pdvJava usando o diretório temporário
-    # echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
-    
-    # Extrair e executar pacote do repositório "pdv-update"
-    tar -zxf pdv-update.tar.gz
-    cd pdv-update
-    echo \"$passwd\" | sudo -S ./pdv-update --pdv
+    echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
+
+    # Se existir, extrair e executar pacote do repositório "pdv-update"
+	test -f "$DIRPDVJAVA/pdv-update.tar.gz" && \
+	tar -zxf "$DIRPDVJAVA/pdv-update.tar.gz" && \
+	cd pdv-update && \
+	echo "$passwd" | sudo -S ./pdv-update --pdv
 
     # Finalizando as configurações
     echo \"$passwd\" | sudo -S ldconfig
     echo
     echo 'Atualização finalizada!'
     echo
-    
+
     # Reinicializar o sistema após 5 Segundos
     echo 'O sistema será reinicializado em 5 Segundos...'
     sleep 5
