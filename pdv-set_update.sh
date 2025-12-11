@@ -263,8 +263,8 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
 
     # Se existir, extrair e executar pacote do repositório "pdv-update"
-	test -f "$DIRPDVJAVA/pdv-update.tar.gz" && \
-	tar -zxf "$DIRPDVJAVA/pdv-update.tar.gz" && \
+	test -f "$WEBFILES/pdv-update.tar.gz" && \
+	tar -zxf "$WEBFILES/pdv-update.tar.gz" && \
 	cd pdv-update && \
 	echo "$passwd" | sudo -S ./pdv-update --pdv
 
