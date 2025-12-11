@@ -257,10 +257,13 @@ for IP in $(cat "$IP_OK_FILE"); do
 	echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
 
     # Sincronizando pdvJava usando o diretório temporário
-    echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
+    echo \"$passwd\" | sudo -S rsync $rsync_options_local \
+	--exclude=pdv-update/ \
+	--exclude=pdv-update.tar.gz \
+	\"$WEBFILES/\" \"$DIRPDVJAVA\"
 
 	# Removendo pacote pdv-update do pdvJava
-	echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
+	# echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
 	
     # Se existir, extrair e executar pacote do repositório "pdv-update" no diretório temporário
 	if [ -f "$WEBFILES/pdv-update.tar.gz" ]; then
