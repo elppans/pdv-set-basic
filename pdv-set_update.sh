@@ -256,17 +256,23 @@ for IP in $(cat "$IP_OK_FILE"); do
 	# Setando permissões em diretórios padrões do PDV
 	echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
 
-	# Removendo pacote pdv-update
-	echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
-
     # Sincronizando pdvJava usando o diretório temporário
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \"$WEBFILES/\" \"$DIRPDVJAVA\"
 
-    # Se existir, extrair e executar pacote do repositório "pdv-update"
-	test -f "$WEBFILES/pdv-update.tar.gz" && \
-	tar -zxf "$WEBFILES/pdv-update.tar.gz" && \
-	cd pdv-update && \
-	echo "$passwd" | sudo -S ./pdv-update --pdv
+	# Removendo pacote pdv-update do pdvJava
+	echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
+	
+    # Se existir, extrair e executar pacote do repositório "pdv-update" no diretório temporário
+	if [ -f "$WEBFILES/pdv-update.tar.gz" ]; then
+	tar -zxf "$WEBFILES/pdv-update.tar.gz"
+	cd "$WEBFILES/pdv-update"
+  	# echo "$passwd" | sudo -S ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
+  	# echo "$passwd" | sudo -S ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
+  	# echo "$passwd" | sudo -S ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
+  	# echo "$passwd" | sudo -S ./pdv-update --zman 		# Atualiza o CODFON do PDV
+  	# echo "$passwd" | sudo -S ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
+  	echo "$passwd" | sudo -S ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
+	fi
 
     # Finalizando as configurações
     echo \"$passwd\" | sudo -S ldconfig
