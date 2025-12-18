@@ -258,6 +258,7 @@ for IP in $(cat "$IP_OK_FILE"); do
 
     # Sincronizando pdvJava usando o diretório temporário
     echo \"$passwd\" | sudo -S rsync $rsync_options_local \
+	--exclude=pdv-sync-sh/ \
 	--exclude=pdv-update/ \
 	--exclude=pdv-update.tar.gz \
 	\"$WEBFILES/\" \"$DIRPDVJAVA\"
@@ -294,7 +295,7 @@ if [ -d "$WEBFILES/pdv-sync-sh" ]; then
   done
 fi
 
-# CUSTOM CMDs
+# CUSTOM CMDs - INÍCIO
 # Qualquer comando adicional a ser customizado, deve ser adicionado a partir daqui
 
 # Comando 1
@@ -303,7 +304,7 @@ fi
 # Etc...
 
 # Fim do espaço para comandos adicionais
-# CUSTOM CMDs
+# CUSTOM CMDs - FIM
 
     # Finalizando as configurações
 	# Se não quiser atualizar informações de bibliotecas, comente estas 4 linhas
