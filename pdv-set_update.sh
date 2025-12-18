@@ -277,13 +277,43 @@ for IP in $(cat "$IP_OK_FILE"); do
   	echo "$passwd" | sudo -S ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
 	fi
 
+# Encontrar arquivos .sh e executar, se tiver permissão
+if [ -d "$WEBFILES/pdv-sync-sh" ]; then
+  # Percorre todos os arquivos .sh dentro do diretório
+  for script in "$WEBFILES/pdv-sync-sh"/*.sh; do
+    # Verifica se o arquivo existe (evita erro se não houver nenhum .sh)
+    [ -e "$script" ] || continue
+
+    # Verifica se tem permissão de execução
+    if [ -x "$script" ]; then
+      echo "Executando $script com sudo..."
+      echo "$passwd" | sudo -S "$script"
+    else
+      echo "Arquivo $script não tem permissão de execução. Ignorado."
+    fi
+  done
+fi
+
+# CUSTOM CMDs
+# Qualquer comando adicional a ser customizado, deve ser adicionado a partir daqui
+
+# Comando 1
+# Comando 2
+# Comando ...
+# Etc...
+
+# Fim do espaço para comandos adicionais
+# CUSTOM CMDs
+
     # Finalizando as configurações
+	# Se não quiser atualizar informações de bibliotecas, comente estas 4 linhas
     echo \"$passwd\" | sudo -S ldconfig
     echo
     echo 'Atualização finalizada!'
     echo
 
     # Reinicializar o sistema após 5 Segundos
+	# Se não quiser reiniciar o sistema, comente estas 3 linhas
     echo 'O sistema será reinicializado em 5 Segundos...'
     sleep 5
     echo \"$passwd\" | sudo -S reboot
