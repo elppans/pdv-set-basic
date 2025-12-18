@@ -54,6 +54,7 @@ SSHKEYSCFILE="$(pwd)/ssh-keyscan.sh"
 PWDFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
 DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
+WPDVSYNCSH="$WEBFILES/pdv-sync-sh"
 
 # Exportar variáveis do ambiente
 export IP_DIR
@@ -68,6 +69,7 @@ export SSHKEYSCFILE
 export PWDFILES
 export WEBFILES
 export DIRPDVJAVA
+export WPDVSYNCSH
 
 # Se o parâmetro foi fornecido, atribui-o à variável (${1/2})
 # user="$1"
@@ -252,6 +254,7 @@ for IP in $(cat "$IP_OK_FILE"); do
     # echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum_servidor
     # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
     # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
+
     
 	# Setando permissões em diretórios padrões do PDV
 	echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
@@ -279,20 +282,27 @@ for IP in $(cat "$IP_OK_FILE"); do
 	fi
 
 # Encontrar arquivos .sh e executar, se tiver permissão
-if [ -d "$WEBFILES/pdv-sync-sh" ]; then
-  # Percorre todos os arquivos .sh dentro do diretório
-  for script in "$WEBFILES/pdv-sync-sh"/*.sh; do
-    # Verifica se o arquivo existe (evita erro se não houver nenhum .sh)
-    [ -e "$script" ] || continue
 
-    # Verifica se tem permissão de execução
-    if [ -x "$script" ]; then
-      echo "Executando $script com sudo..."
-      echo "$passwd" | sudo -S "$script"
-    else
-      echo "Arquivo $script não tem permissão de execução. Ignorado."
-    fi
-  done
+if [ -d \"$WPDVSYNCSH\" ]; then
+cd \"$WPDVSYNCSH\" || exit 1
+
+# find \"$WPDVSYNCSH\" -maxdepth 1 -type f -name '*.sh' -exec echo "{}" \;
+# find \"$WPDVSYNCSH\" -maxdepth 1 -type f -name '*.sh' | while read -r script; do
+#     echo \"Executando \$script...\"
+# done
+ls ./*.sh | while read -r script; do
+	if [ -f \"\$script\" ]; then
+	if [ -x \"\$script\" ]; then
+	echo \"Executando \$script...\"
+	echo \"$passwd\" | sudo -S \"\$script\"
+	echo "$passwd" | sudo -S rm -rf \"\$script\" &>>/dev/null
+	fi
+	fi
+done
+
+# Limpar vestígios
+echo "$passwd" | sudo -S rm -rf \"$WPDVSYNCSH\" &>>/dev/null
+
 fi
 
 # CUSTOM CMDs - INÍCIO
@@ -308,16 +318,16 @@ fi
 
     # Finalizando as configurações
 	# Se não quiser atualizar informações de bibliotecas, comente estas 4 linhas
-    echo \"$passwd\" | sudo -S ldconfig
-    echo
-    echo 'Atualização finalizada!'
-    echo
+    # echo \"$passwd\" | sudo -S ldconfig
+    # echo
+    # echo 'Atualização finalizada!'
+    # echo
 
     # Reinicializar o sistema após 5 Segundos
 	# Se não quiser reiniciar o sistema, comente estas 3 linhas
-    echo 'O sistema será reinicializado em 5 Segundos...'
-    sleep 5
-    echo \"$passwd\" | sudo -S reboot
+    # echo 'O sistema será reinicializado em 5 Segundos...'
+    # sleep 5
+    # echo \"$passwd\" | sudo -S reboot
 "
 
 done
