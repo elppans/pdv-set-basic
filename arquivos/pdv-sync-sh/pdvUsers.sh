@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Senhas individuais
-SENHA_ZANTHUS="upvJ;<]=77o2:"
-SENHA_PDVTEC="SenhaPdvtec123!"
-SENHA_SUSTENTACAO="SenhaSustentacao456!"
+SENHA_ZANTHUS="Senha1"
+SENHA_PDVTEC="Senha2"
+SENHA_SUSTENTACAO="Senha3"
 
 # Função para alterar senha de um usuário
 alterar_senha() {
