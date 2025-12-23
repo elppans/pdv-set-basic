@@ -36,10 +36,10 @@ rm -rf "$IP_OFF_FILE" >>/dev/null
 # Se a comunicação falhar, será gravado em ip_off.txt
 for IP in $(cat "$IP_FILE"); do
     if ping -c 1 "$IP" >>/dev/null; then
-        echo "$IP" OK
+        echo "Conexão com $IP OK"
         echo "$IP" >>"$IP_OK_FILE"
     else
-        echo "$IP OFF"
+        echo "Conexão com $IP OFFLINE"
         echo "$IP" >>"$IP_OFF_FILE"
     fi
 done
