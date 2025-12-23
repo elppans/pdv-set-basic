@@ -2,6 +2,22 @@
 # shellcheck disable=SC2002,SC1010,SC1012,SC1078,SC1079,SC2001,SC2013,SC2027,SC2046,SC2086,SC2140,SC2317
 # shellcheck source=/dev/null
 
+# Comando
+pdvsucmd="$(basename $0)"
+
+# Diretório do arquivo
+file_dir="/tmp" # "$(dirname "$file")"
+mkdir -p "$file_dir/"
+
+# Caminho do log
+log_file="$file_dir/$pdvsucmd".log # lnx_conv_log.txt"
+
+# Log geral
+LOGFILE="$log_file" # ${0##*/}".log
+LOGFILEERROR="$log_file"_error # ${0##*/}"_error.log
+exec 1> >(tee -a "$LOGFILE")
+exec 2> >(tee -a "$LOGFILEERROR")
+
 # Função para verificar se um comando existe
 verifica_comando() {
 	comando=$1
@@ -52,7 +68,7 @@ rsync_options_local="$(echo $rsync_options | sed 's/ -e//')"
 localstate="America/Sao_Paulo"
 PINGFILE="$(pwd)/pdv-set_ping.sh"
 SSHKEYSCFILE="$(pwd)/ssh-keyscan.sh"
-PWDINI="$(pwd)/pwd.ini"
+PWDINI="$HOME/.$pdvsucmd/pwd.ini" # "$(pwd)/pwd.ini"
 PWDFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
 DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
@@ -79,8 +95,9 @@ export WPDVSYNCSH
 # export user
 
 # Carrega a senha de um arquivo (se existir)
-if [ -f "$(pwd)"/pwd.ini ]; then
-    passwd=$(cat "$(pwd)"/pwd.ini)
+mkdir -p "$HOME/.$pdvsucmd"
+if [ -f "$PWDINI" ]; then
+    passwd=$(cat "$PWDINI")
 	export passwd
 fi
 
