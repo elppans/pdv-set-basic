@@ -46,7 +46,8 @@ IP_OK_FILE="$IP_DIR/ip_ok.txt"
 IP_OFF_FILE="$IP_DIR/ip_off.txt"
 # rsync_options="-rlhvz --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 # rsync_options="-rlhvz --update --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
-rsync_options="-rlhz --info=progress2 --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
+# rsync_options="-rlhz --info=progress2 --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
+rsync_options="-rlhz --quiet --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 rsync_options_local="$(echo $rsync_options | sed 's/ -e//')"
 localstate="America/Sao_Paulo"
 PINGFILE="$(pwd)/pdv-set_ping.sh"
@@ -164,7 +165,7 @@ pdv_sshuservar() {
 		user="zanthus"
 		export user
 		echo "Usuário $user em PDV 12.04"
-	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r"; then
+	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" root@"$IP" "lsb_release -r"; then
 		user="root"
 		export user
 		echo "Usuário $user em PDV..."
@@ -226,8 +227,8 @@ for IP in $(cat "$IP_OK_FILE"); do
 	# Chamando a função para executar os comandos via SSH
 	executar_comando_ssh "
     echo 'Criando diretório temporário...'
-    echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
-    echo \"$passwd\" | sudo -S mkdir -m 777 -p \"$WEBFILES\" &>>/dev/null
+    echo \"$passwd\" | sudo -S -p \"\" chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
+    echo \"$passwd\" | sudo -S -p \"\" mkdir -m 777 -p \"$WEBFILES\" &>>/dev/null
 "
 
 	# Faz a sincronização local para remoto via Função RSync e SSH
@@ -236,13 +237,14 @@ for IP in $(cat "$IP_OK_FILE"); do
 	# Faz a sincronização de diretórios locais via acesso SSH, usando RSync
 	# rsync versão menor que 3.1.0 não tem suporte à opção "--info=progress2";
 	# Solução para cópia local em TODAS AS VERSÕES do rsync, e portanto sistema como o Ubuntu 12 é trocar para "--stats".
-	rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--stats/')"
+	# rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--stats/')"
+	rsync_options_local="$(echo $rsync_options_local | sed 's/--info=progress2/--quiet/')"
 	export rsync_options_local
 
 	# Chamando a função para executar os comandos via SSH
 	# A execução da função suporta apenas comandos diretos
 	executar_comando_ssh "
-    # Verificando versão do sistema
+	# Verificando versão do sistema
     echo 'Analisando versão do PDV...'
     cat /etc/canoalinux-release
 
@@ -252,35 +254,35 @@ for IP in $(cat "$IP_OK_FILE"); do
 
     # Executando configurações
     # Limpando path_comum assíncrono (Apenas Descanso)
-    # echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum
-    # echo \"$passwd\" | sudo -S umount -f /Zanthus/Zeus/path_comum_servidor
-    # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
-    # echo \"$passwd\" | sudo -S rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
+    # echo \"$passwd\" | sudo -S -p \"\" umount -f /Zanthus/Zeus/path_comum
+    # echo \"$passwd\" | sudo -S -p \"\" umount -f /Zanthus/Zeus/path_comum_servidor
+    # echo \"$passwd\" | sudo -S -p \"\" rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
+    # echo \"$passwd\" | sudo -S -p \"\" rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
 
     
 	# Setando permissões em diretórios padrões do PDV
-	echo \"$passwd\" | sudo -S chmod -R 777 \"$DIRPDVJAVA\"
+	echo \"$passwd\" | sudo -S -p \"\" chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
 
     # Sincronizando pdvJava usando o diretório temporário
-    echo \"$passwd\" | sudo -S rsync $rsync_options_local \
+    echo \"$passwd\" | sudo -S -p \"\" rsync $rsync_options_local \
 	--exclude=pdv-sync-sh/ \
 	--exclude=pdv-update/ \
 	--exclude=pdv-update.tar.gz \
 	\"$WEBFILES/\" \"$DIRPDVJAVA\"
 
 	# Removendo pacote pdv-update do pdvJava
-	# echo \"$passwd\" | sudo -S rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
+	# echo \"$passwd\" | sudo -S -p \"\" rm -rf "$DIRPDVJAVA/pdv-update.tar.gz" &>>/dev/null
 	
     # Se existir, extrair e executar pacote do repositório "pdv-update" no diretório temporário
 	if [ -f "$WEBFILES/pdv-update.tar.gz" ]; then
 	tar -zxf "$WEBFILES/pdv-update.tar.gz"
 	cd "$WEBFILES/pdv-update"
-  	# echo "$passwd" | sudo -S ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
-  	# echo "$passwd" | sudo -S ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
-  	# echo "$passwd" | sudo -S ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
-  	# echo "$passwd" | sudo -S ./pdv-update --zman 		# Atualiza o CODFON do PDV
-  	# echo "$passwd" | sudo -S ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
-  	echo "$passwd" | sudo -S ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --zman 		# Atualiza o CODFON do PDV
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
+  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
 	fi
 
 # Encontrar arquivos .sh e executar, se tiver permissão
@@ -296,14 +298,14 @@ ls ./*.sh | while read -r script; do
 	if [ -f \"\$script\" ]; then
 	if [ -x \"\$script\" ]; then
 	echo \"Executando \$script...\"
-	echo \"$passwd\" | sudo -S \"\$script\"
-	echo "$passwd" | sudo -S rm -rf \"\$script\" &>>/dev/null
+	echo \"$passwd\" | sudo -S -p \"\" "\$script"
+	echo \"$passwd\" | sudo -S -p \"\" rm -rf "\$script" &>>/dev/null
 	fi
 	fi
 done
 
 # Limpar vestígios
-echo "$passwd" | sudo -S rm -rf \"$WPDVSYNCSH\" &>>/dev/null
+echo \"$passwd\" | sudo -S -p \"\" rm -rf \"$WPDVSYNCSH\" &>>/dev/null
 
 fi
 
@@ -320,7 +322,7 @@ fi
 
     # Finalizando as configurações
 	# Se não quiser atualizar informações de bibliotecas, comente estas 4 linhas
-    # echo \"$passwd\" | sudo -S ldconfig
+    # echo \"$passwd\" | sudo -S -p \"\" ldconfig
     # echo
     # echo 'Atualização finalizada!'
     # echo
@@ -329,7 +331,7 @@ fi
 	# Se não quiser reiniciar o sistema, comente estas 3 linhas
     # echo 'O sistema será reinicializado em 5 Segundos...'
     # sleep 5
-    # echo \"$passwd\" | sudo -S reboot
+    # echo \"$passwd\" | sudo -S -p \"\" reboot
 "
 
 done
