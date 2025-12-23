@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e " ---
+echo -e "---
 Nome do PDV:
 $(hostname)
 IP do PDV: 
