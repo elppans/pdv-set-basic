@@ -20,7 +20,7 @@ touch "$HOME/.ip/ip.txt"
 192.168.15.96
 192.168.15.97
 ```
-
+- Crie um diretório, `$HOME/.pdv-set-basic/` e um arquivo neste diretório, `pwd.ini`
 - **OPCIONAL**. Faça um teste de comunicação
 ```bash
 ./pdv-set_ping.sh
