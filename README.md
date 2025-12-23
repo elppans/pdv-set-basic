@@ -2,16 +2,16 @@
 
 Após baixar:
 
-- Crie o diretório ".ip" em seu $HOME
+- Crie o diretório "**.ip**" em seu **$HOME**
 
 ```bash
 mkdir -p "$HOME/.ip"
 ```
 
-- Crie um arquivo com o nome `**ip.txt**` no diretório "$HOME"
+- Crie um arquivo com o nome **ip.txt** no diretório "**$HOME/.ip**"
 
 ```bash
-touch "$HOME/.ip"
+touch "$HOME/.ip/ip.txt"
 ```
 - Edite e adicione os IPs no arquivo ip.txt como uma lista, linha por linha. Exemplo:
 
