@@ -21,15 +21,17 @@ touch "$HOME/.ip/ip.txt"
 192.168.15.97
 ```
 - Crie um diretório, `$HOME/.pdv-set-basic/` e um arquivo neste diretório, `pwd.ini`
+___
 - **OPCIONAL**. Faça um teste de comunicação
 ```bash
 ./pdv-set_ping.sh
 ```
-
+___
 - Execute o update
+
 >O teste de comunicação foi incluído no Script de atualização,  
 >Antes do trabalho de atualização, será executado o teste de comunicação.
 
 ```bash
-./pdv-set_update-pdvJava.sh
+./pdv-set_update.sh
 ```
