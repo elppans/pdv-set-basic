@@ -8,12 +8,12 @@ Após baixar:
 mkdir -p "$HOME/.ip"
 ```
 
-- Copie o arquivo ip.txt para o diretório
+- Crie um arquivo com o nome `**ip.txt**` no diretório "$HOME"
 
 ```bash
-cp ip.txt "$HOME/.ip"
+touch "$HOME/.ip"
 ```
-- Adicione os IPs no arquivo ip.txt como uma lista, linha por linha. Exemplo:
+- Edite e adicione os IPs no arquivo ip.txt como uma lista, linha por linha. Exemplo:
 
 ```ini
 192.168.15.95
