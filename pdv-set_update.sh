@@ -76,9 +76,20 @@ export WPDVSYNCSH
 
 # Se o parâmetro foi fornecido, atribui-o à variável (${1/2})
 # user="$1"
-passwd="$(cat $PWDINI)"
 # export user
-export passwd
+
+# Carrega a senha de um arquivo (se existir)
+if [ -f "$(pwd)"/pwd.ini ]; then
+    passwd=$(cat "$(pwd)"/pwd.ini)
+	export passwd
+fi
+
+# Verifica se a variável está vazia
+if [ -z "$passwd" ]; then
+    echo "Erro: a variável \$passwd está vazia."
+    echo "Por favor, configure sua senha no arquivo pwd.ini."
+    exit 1
+fi
 
 # Verifica a versão do SSH
 ssh_version=$(ssh -V 2>&1 | awk -F '[^0-9]*' '{print $2}')
@@ -116,9 +127,9 @@ fi
 
 # Função para executar o PINGFILE
 executar_ping() {
-	echo
+	# echo
 	echo "Executando teste de comunicação..."
-	echo
+	# echo
 	# Executa o script especificado em PINGFILE sem argumentos
 	bash "$PINGFILE"
 }
@@ -133,7 +144,7 @@ fi
 executar_ssh_keyscan() {
 	local IP="$1" # Recebe o IP como argumento
 
-	echo
+	# echo
 	echo "Ajustando conexão do endereço IP: $IP"
 
 	if [ -z "$IP" ]; then
@@ -176,7 +187,7 @@ pdv_sshuservar() {
 
 # Função para sincronização de diretório
 ssh_sync() {
-	echo
+	# echo
 	echo "Sincronizando diretório remoto..."
 	# echo -e "
 	sshpass -p "$passwd" \
