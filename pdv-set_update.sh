@@ -4,6 +4,7 @@
 
 # Comando
 pdvsucmd="$(basename $0)"
+pdvsudir_base="$HOME/.pdv-set-basic"
 
 # Diretório do arquivo
 file_dir="/tmp" # "$(dirname "$file")"
@@ -68,7 +69,7 @@ rsync_options_local="$(echo $rsync_options | sed 's/ -e//')"
 localstate="America/Sao_Paulo"
 PINGFILE="$(pwd)/pdv-set_ping.sh"
 SSHKEYSCFILE="$(pwd)/ssh-keyscan.sh"
-PWDINI="$HOME/.$pdvsucmd/pwd.ini" # "$(pwd)/pwd.ini"
+PWDINI="$pdvsudir_base/pwd.ini" # "$(pwd)/pwd.ini"
 PWDFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
 DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
@@ -95,7 +96,8 @@ export WPDVSYNCSH
 # export user
 
 # Carrega a senha de um arquivo (se existir)
-mkdir -p "$HOME/.$pdvsucmd"
+mkdir -p "$pdvsudir_base"
+# echo $PWDINI
 if [ -f "$PWDINI" ]; then
     passwd=$(cat "$PWDINI")
 	export passwd
