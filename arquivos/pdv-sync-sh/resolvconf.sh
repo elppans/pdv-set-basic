@@ -1,5 +1,5 @@
 #!/bin/bash
-
+cat /Zanthus/Zeus/pdvJava/CLAZ.CFG | grep -E "LOJA|CNPJ" | grep -v '#'
 echo -e "---
 Nome do PDV:
 $(hostname)
