@@ -295,6 +295,7 @@ for IP in $(cat "$IP_OK_FILE"); do
 
     # Sincronizando pdvJava usando o diretório temporário
     echo \"$passwd\" | sudo -S -p \"\" rsync $rsync_options_local \
+	--exclude=Arquivos_do_pdvJava_AQUI.txt \
 	--exclude=pdv-sync-sh/ \
 	--exclude=pdv-update/ \
 	--exclude=pdv-update.tar.gz \
