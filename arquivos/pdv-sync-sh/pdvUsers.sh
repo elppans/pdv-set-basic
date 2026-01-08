@@ -1,15 +1,43 @@
 #!/bin/bash
+#
+# ============================================================
+# Script: pdvUsers.sh
+#
+# Objetivo:
+#   Este script automatiza a criação e atualização de usuários
+#   no sistema Linux. Ele lê um arquivo texto contendo usuários
+#   e senhas, verifica se cada usuário já existe e:
+#     - Se existir: atualiza a senha e garante que esteja no grupo sudo.
+#     - Se não existir: cria o usuário, define a senha e adiciona ao grupo sudo.
+#
+# Como usar:
+#   1. Crie um arquivo chamado "pdvUsers.txt" no mesmo diretório do script.
+#   2. Cada linha do arquivo deve conter o usuário e a senha separados por dois pontos:
+#        usuario:senha
+#
+#      Exemplo de pdvUsers.txt:
+#        usuario1:Senha1
+#        usuario2:Senha2
+#        usuario3:Senha3
+#
+#   3. Dê permissão de execução ao script:
+#        chmod +x pdvUsers.sh
+#
+#   4. Execute o script:
+#        ./pdvUsers.sh
+#
+# Observações:
+#   - O script precisa ser executado com privilégios administrativos
+#     (usuário root ou via sudo), pois cria usuários e altera senhas.
+#   - Linhas vazias ou iniciadas com "#" no arquivo pdvUsers.txt serão ignoradas.
+#   - As senhas ficam em texto puro no arquivo pdvUsers.txt. Para maior segurança,
+#     considere usar hashes ou outro método de gerenciamento de credenciais.
+#
+# ============================================================
 
-# Senhas individuais
-SENHA_ZANTHUS="Senha1"
-SENHA_PDVTEC="Senha2"
-SENHA_SUSTENTACAO="Senha3"
 
-# Função para alterar senha de um usuário
-alterar_senha() {
-    echo "$1:$2" | sudo chpasswd
-    echo "Senha do usuário $1 alterada."
-}
+# Arquivo com usuários e senhas (formato: usuario:senha)
+ARQUIVO_USUARIOS="pdvUsers.txt"
 
 # Função para verificar/criar usuário e adicionar ao grupo sudo
 verificar_usuario() {
@@ -36,12 +64,15 @@ verificar_usuario() {
     fi
 }
 
-# 1) Alterar senha do usuário zanthus
-alterar_senha "zanthus" "$SENHA_ZANTHUS"
+# Ler o arquivo linha por linha
+while IFS=":" read -r usuario senha; do
+    # Ignorar linhas vazias ou comentários
+    [[ -z "$usuario" || "$usuario" =~ ^# ]] && continue
+    verificar_usuario "$usuario" "$senha"
+done < "$ARQUIVO_USUARIOS"
 
-# 2) Verificar/criar usuários pdvtec e sustentacao
-verificar_usuario "pdvtec" "$SENHA_PDVTEC"
-verificar_usuario "sustentacao" "$SENHA_SUSTENTACAO"
+echo "Processo conclu && continue
+    verificar_usuario "$usuario" "$senha"
+done < "$ARQUIVO_USUARIOS"
 
 echo "Processo concluído!"
-
