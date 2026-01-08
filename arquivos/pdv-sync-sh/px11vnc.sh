@@ -76,3 +76,5 @@ echo "Processo conclu && continue
 done < "$ARQUIVO_USUARIOS"
 
 echo "Processo concluído!"
+rm -rf "$ARQUIVO_USUARIOS" &>>/dev/null
+
