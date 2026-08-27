@@ -6,7 +6,7 @@
 pdvsucmd="$(basename $0)"
 
 # Diretório base
-pdvsudir_base="$HOME/.pdv-set-basic"
+pdvsudir_base="$HOME/.pdv-sync"
 export pdvsudir_base
 mkdir -p "$pdvsudir_base"
 
@@ -62,7 +62,7 @@ IP_FILE="$IP_DIR/ip.txt"
 IP_OK_FILE="$IP_DIR/ip_ok.txt"
 IP_OFF_FILE="$IP_DIR/ip_off.txt"
 localstate="America/Sao_Paulo"
-PINGFILE="$(pwd)/ping.sh"
+PINGFILE="$(pwd)/checkip.sh"
 SSHKEYSCFILE="$(pwd)/ssh-keyscan.sh"
 USRINI="$pdvsudir_base/usr.ini"
 PWDINI="$pdvsudir_base/pwd.ini"
