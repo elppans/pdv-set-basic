@@ -53,5 +53,23 @@ echo __________
 echo "lsusb:"
 lsusb
 echo __________
+echo "Temperaturas (°C)"
+
+if ! sensors 2>/dev/null; then
+    echo "Dispositivo        Temperatura"
+
+    for hwmon in /sys/class/hwmon/hwmon*; do
+        [ -f "$hwmon/temp1_input" ] || continue
+
+        nome=$(cat "$hwmon/name" 2>/dev/null || basename "$hwmon")
+        temp=$(cat "$hwmon/temp1_input" 2>/dev/null)
+
+        [ -n "$temp" ] || continue
+
+        temp=$(awk "BEGIN {printf \"%.1f\", $temp / 1000}")
+
+        echo "$nome        ${temp}°C"
+    done
+fi
 echo ==========
 echo
