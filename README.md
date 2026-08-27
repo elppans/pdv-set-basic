@@ -25,7 +25,7 @@ touch "$HOME/.ip/ip.txt"
 ___
 - **OPCIONAL**. Faça um teste de comunicação
 ```bash
-./pdv-set_ping.sh
+./modulos/checkip.sh
 ```
 ___
 - Execute o update
@@ -34,7 +34,7 @@ ___
 >Antes do trabalho de atualização, será executado o teste de comunicação.
 
 ```bash
-./pdv-set_update.sh
+./pdv-sync.sh
 ```
 ## Diretório e arquivos de configuração
 
@@ -78,6 +78,4 @@ passwd → senha correspondente
 - Essas variáveis são usadas pelas próximas funções do script.
 ___
 
-- **Nota:**  
-A característica dos arquivos .ini etá em teste no Script `pdv-set_update-apw.sh`
-___
+
