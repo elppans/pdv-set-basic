@@ -1,4 +1,4 @@
-# pdv-set-basic
+# pdv-sync
 
 Após baixar:
 
@@ -20,7 +20,7 @@ touch "$HOME/.ip/ip.txt"
 192.168.15.96
 192.168.15.97
 ```
-- Crie um diretório, `$HOME/.pdv-set-basic/` e dentro, o arquivo `usr.ini` e `pwd.ini`.
+- Crie um diretório, `$HOME/.pdv-sync/` e dentro, o arquivo `usr.ini` e `pwd.ini`.
 >Mais detalhes no item "Diretório e arquivos de configuração"
 ___
 - **OPCIONAL**. Faça um teste de comunicação
@@ -40,7 +40,7 @@ ___
 
 1. Criar o diretório base:
 ```bash
-mkdir -p $HOME/.pdv-set-basic
+mkdir -p $HOME/.pdv-sync
 ```
 2. Dentro desse diretório, criar dois arquivos:
 
