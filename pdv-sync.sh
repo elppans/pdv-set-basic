@@ -4,10 +4,15 @@
 
 # Comando
 pdvsucmd="$(basename $0)"
+
+# Diretório base
 pdvsudir_base="$HOME/.pdv-set-basic"
+export pdvsudir_base
+mkdir -p "$pdvsudir_base"
 
 # Diretório do arquivo
 file_dir="/tmp" # "$(dirname "$file")"
+export file_dir
 mkdir -p "$file_dir/"
 
 # Caminho do log
@@ -37,17 +42,6 @@ verifica_comando rsync
 # Caso todos os comandos existam, o script pode continuar normalmente
 # echo "Todos os comandos necessários estão instalados."
 
-# Verifica se o primeiro parâmetro foi fornecido
-# if [ -z "$1" ]; then
-#     echo "Você não forneceu nenhum valor. Por favor, insira um valor para o usuario."
-#     exit 1
-# fi
-
-# if [ -z "$2" ]; then
-#     echo "Você não forneceu nenhum valor. Por favor, insira um valor para a senha."
-#     exit 1
-# fi
-
 # Variáveis para o ambiente
 
 # Sobre o rsync:
@@ -57,20 +51,22 @@ verifica_comando rsync
 # rsync. A substituição elimina redundâncias, mantendo o mesmo comportamento esperado.
 # rsync local. Quando for um comando local, removendo a opção '-e'. Uso para função "executar_comando_ssh"
 # rsync "--update". Copia apenas arquivos que são mais novos na origem do que no destino, ou que não existem no destino.
-IP_DIR="$HOME/.ip"
-IP_FILE="$IP_DIR/ip.txt"
-IP_OK_FILE="$IP_DIR/ip_ok.txt"
-IP_OFF_FILE="$IP_DIR/ip_off.txt"
 # rsync_options="-rlhvz --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 # rsync_options="-rlhvz --update --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 # rsync_options="-rlhz --info=progress2 --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 rsync_options="-rlhz --quiet --no-checksum --no-owner --no-group --no-times --no-perms --links -e"
 rsync_options_local="$(echo $rsync_options | sed 's/ -e//')"
+
+IP_DIR="$HOME/.ip"
+IP_FILE="$IP_DIR/ip.txt"
+IP_OK_FILE="$IP_DIR/ip_ok.txt"
+IP_OFF_FILE="$IP_DIR/ip_off.txt"
 localstate="America/Sao_Paulo"
-PINGFILE="$(pwd)/pdv-set_ping.sh"
+PINGFILE="$(pwd)/ping.sh"
 SSHKEYSCFILE="$(pwd)/ssh-keyscan.sh"
-PWDINI="$pdvsudir_base/pwd.ini" # "$(pwd)/pwd.ini"
-PWDFILES="$(pwd)/arquivos"
+USRINI="$pdvsudir_base/usr.ini"
+PWDINI="$pdvsudir_base/pwd.ini"
+LOFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
 DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
 WPDVSYNCSH="$WEBFILES/pdv-sync-sh"
@@ -86,29 +82,16 @@ export localstate
 export PINGFILE
 export SSHKEYSCFILE
 export PWDINI
-export PWDFILES
+export LOFILES
 export WEBFILES
 export DIRPDVJAVA
 export WPDVSYNCSH
 
-# Se o parâmetro foi fornecido, atribui-o à variável (${1/2})
-# user="$1"
-# export user
-
-# Carrega a senha de um arquivo (se existir)
-mkdir -p "$pdvsudir_base"
-# echo $PWDINI
-if [ -f "$PWDINI" ]; then
-    passwd=$(cat "$PWDINI")
-	export passwd
-fi
-
-# Verifica se a variável está vazia
-if [ -z "$passwd" ]; then
-    echo "Erro: a variável \$passwd está vazia."
-    echo "Por favor, configure sua senha no arquivo pwd.ini."
-    exit 1
-fi
+# Arquivos .ini de usuários
+USRINI="$pdvsudir_base/usr.ini"
+PWDINI="$pdvsudir_base/pwd.ini"
+export USRINI
+export PWDINI
 
 # Verifica a versão do SSH
 ssh_version=$(ssh -V 2>&1 | awk -F '[^0-9]*' '{print $2}')
@@ -144,6 +127,19 @@ if [ ! -f "$PINGFILE" ]; then
 	exit 1
 fi
 
+# Verifica se o arquivo especificado em USRINI existe
+if [ ! -f "$USRINI" ]; then
+	echo "Erro: O arquivo '$USRINI' não existe. Por favor, crie-o ou especifique o caminho correto."
+	exit 1
+fi
+
+
+# Verifica se o arquivo especificado em PWDINI existe
+if [ ! -f "$PWDINI" ]; then
+	echo "Erro: O arquivo '$PWDINI' não existe. Por favor, crie-o ou especifique o caminho correto."
+	exit 1
+fi
+
 # Função para executar o PINGFILE
 executar_ping() {
 	# echo
@@ -175,33 +171,37 @@ executar_ssh_keyscan() {
 	bash "$SSHKEYSCFILE" "$IP"
 }
 
-# Verifica se o diretório especificado em PWDFILES existe
-if [ ! -d "$PWDFILES" ]; then
-	echo "Erro: O diretório '$PWDFILES' não existe. Por favor, crie-o ou especifique o caminho correto."
+# Verifica se o diretório especificado em LOFILES existe
+if [ ! -d "$LOFILES" ]; then
+	echo "Erro: O diretório '$LOFILES' não existe. Por favor, crie-o ou especifique o caminho correto."
 	exit 1
 fi
 
 pdv_sshuservar() {
-	echo "Verificando usuário ssh..."
-	if sshpass -p ""$passwd"" ssh ""$ssh_options"" user@"$IP" "lsb_release -r | grep -q '16.04'" &>>/dev/null; then
-		user="user"
-		export user
-		echo "Usuário $user em PDV 16.04"
-	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '22.04'"; then
-		user="zanthus"
-		export user
-		echo "Usuário $user em PDV 22.04"
-	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" zanthus@"$IP" "lsb_release -r | grep -q '12.04'"; then
-		user="zanthus"
-		export user
-		echo "Usuário $user em PDV 12.04"
-	elif sshpass -p ""$passwd"" ssh ""$ssh_options"" root@"$IP" "lsb_release -r"; then
-		user="root"
-		export user
-		echo "Usuário $user em PDV..."
-	else
-		echo "Não foi possível verificar o sistema do IP \"$IP\""
-	fi
+    echo "Verificando usuário e senha ssh..."
+
+    # Lê usuários ignorando apenas linhas vazias
+    mapfile -t usuarios < <(grep -v '^\s*$' "$USRINI")
+
+    # Lê senhas ignorando apenas linhas vazias
+    mapfile -t senhas < <(grep -v '^\s*$' "$PWDINI")
+
+
+    # Testa todas as combinações
+    for u in "${usuarios[@]}"; do
+        for p in "${senhas[@]}"; do
+            echo "Testando usuário '$u' com senha..."
+            if sshpass -p "$p" ssh $ssh_options "$u@$IP" "lsb_release -r" &>/dev/null; then
+                export user="$u"
+                export passwd="$p"
+                echo "Conexão bem-sucedida com usuário '$user'"
+                return 0
+            fi
+        done
+    done
+
+    echo "Não foi possível verificar o sistema do IP \"$IP\" com nenhuma combinação."
+    return 1
 }
 
 # Função para sincronização de diretório
@@ -212,7 +212,7 @@ ssh_sync() {
 	sshpass -p "$passwd" \
 		rsync ""$rsync_options"" \
 		"ssh ""$ssh_options""" \
-		""$PWDFILES""/ $user@""$IP"":""$WEBFILES""/
+		""$LOFILES""/ $user@""$IP"":""$WEBFILES""/
 	# "
 }
 
@@ -259,6 +259,7 @@ for IP in $(cat "$IP_OK_FILE"); do
     echo 'Criando diretório temporário...'
     echo \"$passwd\" | sudo -S -p \"\" chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
     echo \"$passwd\" | sudo -S -p \"\" mkdir -m 777 -p \"$WEBFILES\" &>>/dev/null
+    echo \"$passwd\" | sudo -S -p \"\" chown "$user:$user" \"$WEBFILES\" &>>/dev/null
 "
 
 	# Faz a sincronização local para remoto via Função RSync e SSH
@@ -308,12 +309,12 @@ for IP in $(cat "$IP_OK_FILE"); do
 	if [ -f "$WEBFILES/pdv-update.tar.gz" ]; then
 	tar -zxf "$WEBFILES/pdv-update.tar.gz"
 	cd "$WEBFILES/pdv-update"
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
+  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
   	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --zman 		# Atualiza o CODFON do PDV
+  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
+  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --zman 		# Atualiza o CODFON do PDV
   	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
-  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
+  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
 	fi
 
 # Encontrar arquivos .sh e executar, se tiver permissão
@@ -330,17 +331,20 @@ ls ./*.sh | while read -r script; do
 	if [ -x \"\$script\" ]; then
 	echo \"Executando \$script...\"
 	echo \"$passwd\" | sudo -S -p \"\" "\$script"
-	echo \"$passwd\" | sudo -S -p \"\" rm -rf "\$script" &>>/dev/null
+	# echo \"$passwd\" | sudo -S -p \"\" rm -rf "\$script" &>>/dev/null
+	rm -rf "\$script" &>>/dev/null
 	fi
 	fi
 done
 
 # Limpar vestígios
-echo \"$passwd\" | sudo -S -p \"\" rm -rf \"$WPDVSYNCSH\" &>>/dev/null
+# echo \"$passwd\" | sudo -S -p \"\" rm -rf \"$WPDVSYNCSH\" &>>/dev/null
+rm -rf \"$WPDVSYNCSH\" &>>/dev/null
 
 fi
 
 # CUSTOM CMDs - INÍCIO
+
 # Qualquer comando adicional a ser customizado, deve ser adicionado a partir daqui
 
 # Comando 1
@@ -349,6 +353,7 @@ fi
 # Etc...
 
 # Fim do espaço para comandos adicionais
+
 # CUSTOM CMDs - FIM
 
     # Finalizando as configurações
@@ -363,6 +368,9 @@ fi
     # echo 'O sistema será reinicializado em 5 Segundos...'
     # sleep 5
     # echo \"$passwd\" | sudo -S -p \"\" reboot
+    
+# Fim do Script (NÃO MODIFIQUE DAQUI EM DIANTE)
+    rm -rf \"$WEBFILES\" &>>/dev/null
 "
 
 done
