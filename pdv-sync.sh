@@ -69,7 +69,7 @@ PWDINI="$pdvsudir_base/pwd.ini"
 LOFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
 DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
-WPDVSYNCSH="$WEBFILES/pdv-sync-sh"
+WPDVSYNCSH="$WEBFILES/bin"
 
 # Exportar variáveis do ambiente
 export IP_DIR
@@ -297,7 +297,7 @@ for IP in $(cat "$IP_OK_FILE"); do
     # Sincronizando pdvJava usando o diretório temporário
     echo \"$passwd\" | sudo -S -p \"\" rsync $rsync_options_local \
 	--exclude=Arquivos_do_pdvJava_AQUI.txt \
-	--exclude=pdv-sync-sh/ \
+	--exclude=bin/ \
 	--exclude=pdv-update/ \
 	--exclude=pdv-update.tar.gz \
 	\"$WEBFILES/\" \"$DIRPDVJAVA\"
