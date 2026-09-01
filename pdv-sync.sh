@@ -19,7 +19,7 @@ mkdir -p "$file_dir/"
 log_file="$file_dir/$pdvsucmd".log # lnx_conv_log.txt"
 
 # Log geral
-LOGFILE="$log_file" # ${0##*/}".log
+LOGFILE="$log_file"            # ${0##*/}".log
 LOGFILEERROR="$log_file"_error # ${0##*/}"_error.log
 exec 1> >(tee -a "$LOGFILE")
 exec 2> >(tee -a "$LOGFILEERROR")
@@ -68,7 +68,8 @@ USRINI="$pdvsudir_base/usr.ini"
 PWDINI="$pdvsudir_base/pwd.ini"
 LOFILES="$(pwd)/arquivos"
 WEBFILES="/tmp/Update_pdvJava_dir"
-DIRPDVJAVA="/Zanthus/Zeus/pdvJava"
+DIRZEUS="/Zanthus/Zeus"
+DIRPDVJAVA="$DIRZEUS/pdvJava"
 WPDVSYNCSH="$WEBFILES/bin"
 
 # Exportar variáveis do ambiente
@@ -84,6 +85,7 @@ export SSHKEYSCFILE
 export PWDINI
 export LOFILES
 export WEBFILES
+export DIRZEUS
 export DIRPDVJAVA
 export WPDVSYNCSH
 
@@ -133,7 +135,6 @@ if [ ! -f "$USRINI" ]; then
 	exit 1
 fi
 
-
 # Verifica se o arquivo especificado em PWDINI existe
 if [ ! -f "$PWDINI" ]; then
 	echo "Erro: O arquivo '$PWDINI' não existe. Por favor, crie-o ou especifique o caminho correto."
@@ -178,30 +179,29 @@ if [ ! -d "$LOFILES" ]; then
 fi
 
 pdv_sshuservar() {
-    echo "Verificando usuário e senha ssh..."
+	echo "Verificando usuário e senha ssh..."
 
-    # Lê usuários ignorando apenas linhas vazias
-    mapfile -t usuarios < <(grep -v '^\s*$' "$USRINI")
+	# Lê usuários ignorando apenas linhas vazias
+	mapfile -t usuarios < <(grep -v '^\s*$' "$USRINI")
 
-    # Lê senhas ignorando apenas linhas vazias
-    mapfile -t senhas < <(grep -v '^\s*$' "$PWDINI")
+	# Lê senhas ignorando apenas linhas vazias
+	mapfile -t senhas < <(grep -v '^\s*$' "$PWDINI")
 
+	# Testa todas as combinações
+	for u in "${usuarios[@]}"; do
+		for p in "${senhas[@]}"; do
+			echo "Testando usuário '$u' com senha..."
+			if sshpass -p "$p" ssh $ssh_options "$u@$IP" "lsb_release -r" &>/dev/null; then
+				export user="$u"
+				export passwd="$p"
+				echo "Conexão bem-sucedida com usuário '$user'"
+				return 0
+			fi
+		done
+	done
 
-    # Testa todas as combinações
-    for u in "${usuarios[@]}"; do
-        for p in "${senhas[@]}"; do
-            echo "Testando usuário '$u' com senha..."
-            if sshpass -p "$p" ssh $ssh_options "$u@$IP" "lsb_release -r" &>/dev/null; then
-                export user="$u"
-                export passwd="$p"
-                echo "Conexão bem-sucedida com usuário '$user'"
-                return 0
-            fi
-        done
-    done
-
-    echo "Não foi possível verificar o sistema do IP \"$IP\" com nenhuma combinação."
-    return 1
+	echo "Não foi possível verificar o sistema do IP \"$IP\" com nenhuma combinação."
+	return 1
 }
 
 # Função para sincronização de diretório
@@ -290,9 +290,9 @@ for IP in $(cat "$IP_OK_FILE"); do
     # echo \"$passwd\" | sudo -S -p \"\" rm -rf /Zanthus/Zeus/path_comum/Descanso /Zanthus/Zeus/path_comum_temp/Descanso
     # echo \"$passwd\" | sudo -S -p \"\" rm -rf /Zanthus/Zeus/path_comum/GERALCFG/ZIGK.CFG /Zanthus/Zeus/path_comum_temp/GERALCFG/ZIGK.CFG
 
-    
 	# Setando permissões em diretórios padrões do PDV
 	echo \"$passwd\" | sudo -S -p \"\" chmod -R 777 \"$DIRPDVJAVA\" &>>/dev/null
+	echo \"$passwd\" | sudo -S -p \"\" chmod -R 777 \"$DIRZEUS\" &>>/dev/null
 
     # Sincronizando pdvJava usando o diretório temporário
     echo \"$passwd\" | sudo -S -p \"\" rsync $rsync_options_local \
@@ -309,12 +309,12 @@ for IP in $(cat "$IP_OK_FILE"); do
 	if [ -f "$WEBFILES/pdv-update.tar.gz" ]; then
 	tar -zxf "$WEBFILES/pdv-update.tar.gz"
 	cd "$WEBFILES/pdv-update"
-  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
-  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
-  	echo "$passwd" | sudo -S -p \"\" ./pdv-update --zman 		# Atualiza o CODFON do PDV
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
-  	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
+	echo "$passwd" | sudo -S -p \"\" ./pdv-update --lib 		# Atualiza as bibliotecas do PDV
+	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --ctsat 		# Atualiza o ctsat do PDV
+	echo "$passwd" | sudo -S -p \"\" ./pdv-update --modulo 		# Atualiza o moduloPHPPDV do PDV
+	echo "$passwd" | sudo -S -p \"\" ./pdv-update --zman 		# Atualiza o CODFON do PDV
+	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --jpdvgui6 	# Atualiza o Java do PDV
+	# echo "$passwd" | sudo -S -p \"\" ./pdv-update --pdv 		# Atualiza todos os módulos {-l,-m,-z,-j}
 	fi
 
 # Encontrar arquivos .sh e executar, se tiver permissão
