@@ -45,7 +45,9 @@ for d in /sys/block/*; do
 done
 fi
 echo __________
-lscpu | grep -i -E 'Model:|Modelo:'
+df -h /
+echo __________
+lscpu | grep -i -E 'Model|Model:|Modelo:|Model name:'
 lscpu | grep -i 'CPU(s):'
 echo __________
 free -h
